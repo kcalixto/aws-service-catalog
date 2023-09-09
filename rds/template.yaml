@@ -1,4 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
+
 Resources:
   RDSSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -21,8 +22,8 @@ Resources:
       PubliclyAccessible: true
       VPCSecurityGroups:
         - Fn::GetAtt: RDSSecurityGroup.GroupId
-      MasterUsername: !Ref DBUser.Value
-      MasterUserPassword: !Ref DBPassword.Value
+      MasterUsername: !Ref DBUser
+      MasterUserPassword: !Ref DBPassword
       BackupRetentionPeriod: 0
       StorageType: gp2
 
