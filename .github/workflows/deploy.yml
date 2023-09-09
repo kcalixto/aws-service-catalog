@@ -1,0 +1,40 @@
+name: Deploy to AWS Service Catalog
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: sa-east-1
+
+      - name: Bump version and push tag
+        id: create_tag
+        uses: anothrNick/github-tag-action@1.61.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: false
+          DEFAULT_BUMP: patch
+
+      - name: Upload file to s3
+        run: |
+          aws s3 sync rds/template.yml s3://kcalixto-aws-service-catalog/rds/${{ steps.create_tag.outputs.new_tag }}/template.yml --delete
+      
+      - name: Create new product version
+        run: |
+          aws servicecatalog create-provisioning-artifact \
+            --product-id prod-5fyzrafsho6rw \
+            --parameters '{"Name":"${{ steps.create_tag.outputs.new_tag }}","Info":{"LoadTemplateFromURL":"https://kcalixto-aws-service-catalog.s3.amazonaws.com/rds/${{ steps.create_tag.outputs.new_tag }}/template.yml"},"Type":"CLOUD_FORMATION_TEMPLATE"}'
