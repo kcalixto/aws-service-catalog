@@ -37,4 +37,4 @@ jobs:
         run: |
           aws servicecatalog create-provisioning-artifact \
             --product-id prod-5fyzrafsho6rw \
-            --parameters '{"Name":"${{ steps.create_tag.outputs.new_tag }}","Info":{"LoadTemplateFromURL":"https://kcalixto-aws-service-catalog.s3.amazonaws.com/rds/${{ steps.create_tag.outputs.new_tag }}/template.yml"},"Type":"CLOUD_FORMATION_TEMPLATE"}'
+            --parameters '{"Name":"${{ steps.create_tag.outputs.new_tag }}","Info":{"LoadTemplateFromURL":"https://kcalixto-aws-service-catalog.s3.amazonaws.com/rds/${{ steps.create_tag.outputs.new_tag }}/template.yaml"},"Type":"CLOUD_FORMATION_TEMPLATE"}'
