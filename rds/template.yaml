@@ -10,9 +10,8 @@ Parameters:
     AllowedPattern: "^[a-z]+(_[a-z]+)*$"
     ConstraintDescription: Must be snake case.
 
-# todo add no echo
   InputDBUser:
-    Default: "unset"
+    NoEcho: true
     Description: The database admin account username
     Type: String
     MinLength: "3"
@@ -21,10 +20,10 @@ Parameters:
     ConstraintDescription: Must be snake case.
 
   InputDBPassword:
-    Default: "unset"
+    NoEcho: true
     Description: The database admin account password
     Type: String
-    MinLength: "3"
+    MinLength: "8"
     MaxLength: "32"
     AllowedPattern: "^[a-zA-Z0-9]+$"
     ConstraintDescription: Must be alphanumeric.
@@ -60,28 +59,36 @@ Resources:
   DBHost:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: /stack/db-host
+      Name: !Sub
+        - "/${Prefix}/db-host"
+        - Prefix: !Ref InputDBName
       Type: String
       Value: !GetAtt RDSInstance.Endpoint.Address
 
   DBPort:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: /stack/db-port
+      Name: !Sub
+        - "/${Prefix}/db-port"
+        - Prefix: !Ref InputDBName
       Type: String
       Value: "3306"
 
   DBUser:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: /stack/db-user
+      Name: !Sub
+        - "/${Prefix}/db-user"
+        - Prefix: !Ref InputDBName
       Type: String
       Value: !Ref InputDBUser
 
   DBPassword:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: /stack/db-pass
+      Name: !Sub
+        - "/${Prefix}/db-pass"
+        - Prefix: !Ref InputDBName
       Type: String
       Value: !Ref InputDBPassword
 # todo output the db host
