@@ -30,27 +30,27 @@ Resources:
   DBHost:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Sub "/${AWS::ServiceCatalog::ProductName}/db-host"
+      Name: !Sub "/stack/db-host"
       Type: String
       Value: !GetAtt RDSInstance.Endpoint.Address
 
   DBPort:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Sub "/${AWS::ServiceCatalog::ProductName}/db-port"
+      Name: !Sub "/stack/db-port"
       Type: String
       Value: "3306"
 
   DBUser:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Sub "/${AWS::ServiceCatalog::ProductName}/db-user"
+      Name: !Sub "/stack/db-user"
       Type: String
       Value: "admin"
 
   DBPassword:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: !Sub "/${AWS::ServiceCatalog::ProductName}/db-pass"
+      Name: !Sub "/stack/db-pass"
       Type: String
       Value: "password"
