@@ -15,7 +15,7 @@ Parameters:
     Default: "unset"
     Description: The database admin account username
     Type: String
-    MinLength: "1"
+    MinLength: "3"
     MaxLength: "16"
     AllowedPattern: "^[a-z]+(_[a-z]+)*$"
     ConstraintDescription: Must be snake case.
@@ -24,7 +24,7 @@ Parameters:
     Default: "unset"
     Description: The database admin account password
     Type: String
-    MinLength: "8"
+    MinLength: "3"
     MaxLength: "32"
     AllowedPattern: "^[a-zA-Z0-9]+$"
     ConstraintDescription: Must be alphanumeric.
