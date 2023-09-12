@@ -74,6 +74,15 @@ Resources:
       Type: String
       Value: "3306"
 
+  DBName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub
+        - "/${Prefix}/db-name"
+        - Prefix: !Ref InputDBName
+      Type: String
+      Value: !Ref InputDBName
+
   DBUser:
     Type: AWS::SSM::Parameter
     Properties:
